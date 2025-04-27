@@ -9,7 +9,7 @@ class Node:
 
 class RedBlackTree:
     def __init__(self):
-        self.NIL = Node(key=None, color="black")  # Sentinel NIL node
+        self.NIL = Node(key=None, color="black")  # Sentinel NIL node (black)
         self.root = self.NIL
 
     def insert(self, key):

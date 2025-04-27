@@ -67,3 +67,15 @@ class BinarySearchTree:
         while current.left:
             current = current.left
         return current
+
+    def traverse(self):
+        result = []
+        self._inorder_traversal(self.root, result)
+        return result
+
+    def _inorder_traversal(self, node, result):
+        if node:
+            self._inorder_traversal(node.left, result)
+            result.append(node.key)
+            self._inorder_traversal(node.right, result)
+

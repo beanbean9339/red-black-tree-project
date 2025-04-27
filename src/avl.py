@@ -65,3 +65,16 @@ class AVLTree:
         while root.left is not None:
             root = root.left
         return root
+
+    # Traverse method to perform an in-order traversal of the AVL Tree
+    def traverse(self):
+        result = []
+        self._inorder_traversal(self.root, result)
+        return result
+
+    # Helper method to recursively perform the in-order traversal
+    def _inorder_traversal(self, node, result):
+        if node:
+            self._inorder_traversal(node.left, result)  # Traverse left subtree
+            result.append(node.value)  # Visit the node
+            self._inorder_traversal(node.right, result)  # Traverse right subtree
