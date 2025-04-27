@@ -1,3 +1,6 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
 class Node:
     def __init__(self, key, color="red", parent=None, left=None, right=None):
         self.key = key
@@ -5,7 +8,6 @@ class Node:
         self.parent = parent
         self.left = left
         self.right = right
-
 
 class RedBlackTree:
     def __init__(self):
@@ -211,6 +213,35 @@ class RedBlackTree:
                     x = self.root
         x.color = "black"
 
+    def visualize(self):
+        G = nx.DiGraph()
+
+        def add_edges(node):
+            if node != self.NIL:
+                # Add the current node with its color attribute
+                G.add_node(node.key, color=node.color)
+                
+                if node.left != self.NIL:
+                    G.add_edge(node.key, node.left.key, color=node.left.color)
+                    add_edges(node.left)
+                if node.right != self.NIL:
+                    G.add_edge(node.key, node.right.key, color=node.right.color)
+                    add_edges(node.right)
+
+        add_edges(self.root)
+
+        # Now, extract the color from the node attribute
+        node_colors = ["red" if G.nodes[node]["color"] == "red" else "lightgray" for node in G.nodes]
+        edge_colors = [G[u][v]["color"] for u, v in G.edges]
+
+        # Positions for nodes in a 2D plane
+        pos = nx.spring_layout(G)
+        
+        # Drawing the graph
+        nx.draw(G, pos, with_labels=True, node_size=500, node_color=node_colors, edge_color=edge_colors, font_weight="bold", font_size=10)
+
+        plt.title("Red-Black Tree Visualization")
+        plt.show()
 
 # Example usage:
 if __name__ == "__main__":
@@ -219,19 +250,5 @@ if __name__ == "__main__":
     for key in keys:
         rbt.insert(key)
 
-    print("Inorder traversal of the Red-Black Tree:")
-    result = rbt.traverse()  # renamed method
-    print(result)
-
-    search_key = 15
-    found_node = rbt.search(search_key)
-    if found_node:
-        print(f"Key {search_key} found in the tree.")
-    else:
-        print(f"Key {search_key} not found in the tree.")
-
-    print("Deleting key 15...")
-    rbt.delete(15)
-
-    print("Inorder traversal after deletion:")
-    print(rbt.traverse())  # renamed method
+    # Visualize the tree
+    rbt.visualize()
