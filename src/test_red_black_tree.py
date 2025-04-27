@@ -1,5 +1,5 @@
 import unittest
-from src.red_black_tree import RedBlackTree
+from red_black_tree import RedBlackTree
 
 class TestRedBlackTree(unittest.TestCase):
 
@@ -47,20 +47,11 @@ class TestRedBlackTree(unittest.TestCase):
         for key in keys:
             self.tree.insert(key)
 
-        traversal_result = []
-        self.tree.inorder_traversal(self.tree.root, traversal_result)
+        traversal_result = self.tree.traverse()  # Use traverse instead of inorder_traversal
         expected_result = sorted(keys)
 
         self.assertEqual(traversal_result, expected_result)
 
+
 if __name__ == "__main__":
-    unittest.main()
-#     def inorder_traversal(self, node, result):
-#         if node != self.NIL:
-#             self.inorder_traversal(node.left, result)
-#             result.append(node.data)
-#             self.inorder_traversal(node.right, result)
-# 
-#     def delete(self, data):
-#         # Deletion logic goes here (not implemented in this example)
-#         pass
+    unittest.main(verbosity=2)

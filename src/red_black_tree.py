@@ -96,18 +96,16 @@ class RedBlackTree:
         y.right = x
         x.parent = y
 
-    def inorder_traversal(self, node=None, result=None):
-        if result is None:
-            result = []
-        if node is None:
-            node = self.root
-
-        if node != self.NIL:
-            self.inorder_traversal(node.left, result)
-            result.append(node.key)
-            self.inorder_traversal(node.right, result)
-
+    def traverse(self):
+        result = []
+        self._inorder_helper(self.root, result)
         return result
+
+    def _inorder_helper(self, node, result):
+        if node != self.NIL:
+            self._inorder_helper(node.left, result)
+            result.append(node.key)
+            self._inorder_helper(node.right, result)
 
     def search(self, key, node=None):
         if node is None:
@@ -222,7 +220,7 @@ if __name__ == "__main__":
         rbt.insert(key)
 
     print("Inorder traversal of the Red-Black Tree:")
-    result = rbt.inorder_traversal()
+    result = rbt.traverse()  # renamed method
     print(result)
 
     search_key = 15
@@ -236,4 +234,4 @@ if __name__ == "__main__":
     rbt.delete(15)
 
     print("Inorder traversal after deletion:")
-    print(rbt.inorder_traversal())
+    print(rbt.traverse())  # renamed method
